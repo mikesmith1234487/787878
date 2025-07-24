@@ -20,8 +20,11 @@ jobs:
     - name: Build DLL
       shell: cmd
       run: |
-        mkdir build && ^
-        cl /LD GCodeViewer.cpp /Fe:build\GCodeViewer.dll /link /DEF:GCodeViewer.def
+        call "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat" &&^ 
+        mkdir build &&^
+        cl /LD GCodeViewer.cpp /Fe:build\\GCodeViewer.dll /link /DEF:GCodeViewer.def
+
+
 
     - name: Upload DLL Artifact
       uses: actions/upload-artifact@v4
