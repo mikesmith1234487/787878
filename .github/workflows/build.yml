@@ -1,0 +1,30 @@
+name: Build GCodeViewer Plugin (64-bit DLL)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Build DLL
+      shell: cmd
+      run: |
+        mkdir build && ^
+        cl /LD GCodeViewer.cpp /Fe:build\GCodeViewer.dll /link /DEF:GCodeViewer.def
+
+    - name: Upload DLL Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: GCodeViewer64
+        path: build/GCodeViewer.dll
